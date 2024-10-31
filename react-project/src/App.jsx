@@ -1,61 +1,33 @@
-/* eslint-enable react/jsx-key */
-/* eslint-disable react/prop-types */
+import ReactDOM from "react-dom";
+import { useState } from "react";
+import React from "react";
+import "./App.css";
 
-import './App.css'
+function CongratulationsMessage({ name }) {
+  return <p>Congratulations {name}!</p>;
+}
 
-function Header({ name, year }){
-  
+function ChangeNameButton({ onChangeName }) {
+  return <button onClick={onChangeName}>Change winner</button>;
+}
+
+function App() {
+  const [name, setName] = useState("Steph");
+
+  React.useEffect(() => {
+    document.title = `Celebrate, ${name}!`;
+  }, [name]);
+
+  const handleChangeName = () => {
+    setName("Lori");
+  };
+
   return (
-    <header>
-  <h2>Welcome to my react + vite {name}!</h2>
-  <p>Copyright {year}</p>
-  </header>
+    <div>
+      <CongratulationsMessage name={name} />
+      <ChangeNameButton onChangeName={handleChangeName} />
+    </div>
   );
 }
 
-
-const items = ["Mashonja", 
-  "Maotwana", "Oxtails", "tribe", "banana", "chicken livers"
-];
-
-const dishObjects = items.map((dish, i) => ({
-  id : i,
-  title: dish
-}));
-console.log(dishObjects);
-  function Main({ dishes }) {
-    return (
-      <>
-      <div>
-        <h2>Welcome to wildboar pots</h2>
-    </div>
-      <main>
-      <img 
-      src="https://github.com/moloromalepe.png" 
-      height={200} 
-        alt='github photo'
-      />
-    <ul>
-      { dishes.map((dish) => (
-
-     <li key={dish.id} style={{listStyleType: "none"}}> {dish.title} </li>
-  
-      ))}
-    </ul>
-    </main>
-    </>
-
-    );
-  }
-
-function App() {
-  return (
-   <div>
-    <Header name="project" year={new Date().getFullYear()} />
-    <Main dishes =  {dishObjects} />
-    </div>
-
-  ); 
-}
-
-export default App
+export default App;
